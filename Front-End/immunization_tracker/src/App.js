@@ -3,7 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Home";
-import Immunizations from "./Immunizations";
+import Immunizations from "./Immunizations.js";
 import AddImmunization from "./AddImmunization";
 
 function App() {
