@@ -23,7 +23,7 @@ function Home() {
         ))}
       </ul>
     </div>
-  );2
+  );
 }
 
 export default Home;
