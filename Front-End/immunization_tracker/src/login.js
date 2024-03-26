@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './style.css'
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulate login logic (replace with your authentication logic)
-    console.log(`Username: ${username}, Password: ${password}`);
+    try {
+      const response = await axios.post('/login', {
+        username,
+        password,
+      });
+    } catch (error) {
+      console.error(error);
+      setErrorMessage(error.response?.data?.message || 'Login failed'); // Handle potential error messages from the backend
+    }
+
     setUsername('');
     setPassword('');
   };

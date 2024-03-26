@@ -18,6 +18,10 @@ function App() {
           <Route path="/immunizations" element={<Immunizations />} />
           <Route path="/add-immunization" element={<AddImmunization />} />
           <Route path="/register" element={<Registration />} />
+          <Route path="/children" element={<Children />} />  
+          <Route path="/add-child" element={<AddChild />} />  
+          <Route path="/edit-child/:id" element={<EditChild />} />  
+          <Route path="/profile" element={<Profile />} />  
         </Routes>
         <Footer />
       </div>
