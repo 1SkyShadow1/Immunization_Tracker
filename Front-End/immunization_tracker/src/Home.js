@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import "./styles/global.css";
 function Home() {
   const [immunizations, setImmunizations] = useState([]);
 
@@ -17,6 +17,7 @@ function Home() {
   return (
     <div>
       <h2>Immunizations</h2>
+      
       <ul>
         {immunizations.map(immunization => (
           <li key={immunization.id}>{immunization.name} - {immunization.date}</li>

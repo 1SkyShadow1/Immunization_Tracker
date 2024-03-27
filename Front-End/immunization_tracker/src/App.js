@@ -8,7 +8,8 @@ import AddImmunization from "./AddImmunization";
 import Login from "./login.js";
 import Registration from "./Registration.js";
 import UserProfile from "./components/UserProfile.js" 
-import Calendar from "./components/Calender.js";
+import Planner from "./Planner.js"
+
 function App() {
   return (
     <Router>
@@ -21,6 +22,7 @@ function App() {
           <Route path="/add-immunization" element={<AddImmunization />} />
           <Route path="/register" element={<Registration />} />
           <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/planner" element={<Planner />} />
         </Routes>
         <Footer />
       </div>

@@ -43,7 +43,7 @@
   object-fit: cover;
 }
 
-/* Google Form styles */
+
 
 .user-profile-form {
   background-color: beige;
@@ -71,7 +71,7 @@
 }
 
 .user-profile-form button:hover {
-  background-color: #0056b3;
+  background-color: orange;
   border-color: #0056b3;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
