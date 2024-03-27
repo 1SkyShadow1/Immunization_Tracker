@@ -1,11 +1,8 @@
 {
   "name": "immunization_tracker",
-<<<<<<< HEAD
   "version": "1.0.0",
   "description": "A simple immunization tracker application.",
   "main": "index.js",
-=======
-  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -19,7 +16,6 @@
     "v": "^0.3.0",
     "web-vitals": "^2.1.4"
   },
->>>>>>> 721beb9a6bffe15ea6b76ef4af032994f78fee23
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -29,12 +25,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "axios": "^0.27.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.4.4"
-  },
   "devDependencies": {
     "eslint": "^8.25.0",
     "eslint-config-airbnb": "^19.0.4",
