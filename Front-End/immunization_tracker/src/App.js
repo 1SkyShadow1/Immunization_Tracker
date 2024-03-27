@@ -7,6 +7,7 @@ import Immunizations from "./Immunizations.js";
 import AddImmunization from "./AddImmunization";
 import Login from "./login.js";
 import Registration from "./Registration.js";
+import UserProfile from "./components/UserProfile.js" 
 function App() {
   return (
     <Router>
@@ -18,10 +19,7 @@ function App() {
           <Route path="/immunizations" element={<Immunizations />} />
           <Route path="/add-immunization" element={<AddImmunization />} />
           <Route path="/register" element={<Registration />} />
-          <Route path="/children" element={<Children />} />  
-          <Route path="/add-child" element={<AddChild />} />  
-          <Route path="/edit-child/:id" element={<EditChild />} />  
-          <Route path="/profile" element={<Profile />} />  
+          <Route path="/user-profile" element={<UserProfile />} />
         </Routes>
         <Footer />
       </div>
