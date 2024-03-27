@@ -22,6 +22,9 @@ function App() {
           <Route path="/add-immunization" element={<AddImmunization />} />
           <Route path="/register" element={<Registration />} />
           <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/children" element={<Children />} />  
+          <Route path="/add-child" element={<AddChild />} />  
+          <Route path="/edit-child/:id" element={<EditChild />} />
           <Route path="/planner" element={<Planner />} />
         </Routes>
         <Footer />
