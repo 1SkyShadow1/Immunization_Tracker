@@ -13,6 +13,7 @@ const LandingSection = () => {
             <li>Get reminders when your child's next immunization is due.</li>
             <li>Share your child's immunization records with your doctor or other caregivers.</li>
           </ul>
+          <br/>
           <a href="/home" className="btn btn-primary">Get started today!</a>
         </div>
       </div>

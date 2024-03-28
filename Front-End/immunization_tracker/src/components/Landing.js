@@ -1,15 +1,14 @@
 import React from 'react';
-import Header from './components/Header';
-import LandingSection from './components/LandingSection';
-import Footer from './components/Footer';
+import LandingSection from './LandingSection';
+
 
 const Landing = () => {
   return (
-    <>
-      <Header />
+    <div>
+      
       <LandingSection />
-      <Footer />
-    </>
+      
+    </div>
   );
 };
 

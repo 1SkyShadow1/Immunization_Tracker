@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./components/Header.js";
+import Footer from "./components/Footer.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import Immunizations from "./Immunizations.js";
@@ -9,6 +9,7 @@ import Login from "./login.js";
 import Registration from "./Registration.js";
 import UserProfile from "./components/UserProfile.js" 
 import Planner from "./Planner.js"
+import Landing from "./components/Landing.js"
 
 function App() {
   return (
@@ -16,11 +17,10 @@ function App() {
       <div className="App">
         <Header />
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/immunizations" element={<Immunizations />} />
-          <Route exact path="/" element={<Landing />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Landing />} />
           <Route path="/add-immunization" element={<AddImmunization />} />
           <Route path="/register" element={<Registration />} />
           <Route path="/user-profile" element={<UserProfile />} />

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Header from './Header';
-import Footer from './Footer';
 import AboutSection from './components/AboutSection';
 import FeaturesSection from './components/FeaturesSection';
 import CtaSection from './components/CtaSection';
@@ -22,12 +20,12 @@ function Home() {
 
   return (
     <>
-      <Header />
+     
       
       <AboutSection />
       <FeaturesSection />
       <CtaSection />
-      <Footer />
+      
     </>
   );
 }
