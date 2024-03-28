@@ -19,13 +19,15 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/immunizations" element={<Immunizations />} />
+          <Route exact path="/" element={<Landing />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/add-immunization" element={<AddImmunization />} />
           <Route path="/register" element={<Registration />} />
-          {/* <Route path="/user-profile" element={<UserProfile />} />
-          <Route path="/children" element={<Children />} />  
+          <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/planner" element={<Planner />} />
+          {/* <Route path="/children" element={<Children />} />  
           <Route path="/add-child" element={<AddChild />} />  
-          <Route path="/edit-child/:id" element={<EditChild />} />
-          <Route path="/planner" element={<Planner />} /> */}
+          <Route path="/edit-child/:id" element={<EditChild />} /> */}
         </Routes>
         <Footer />
       </div>

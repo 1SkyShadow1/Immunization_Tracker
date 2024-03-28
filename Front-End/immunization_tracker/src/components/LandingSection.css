@@ -1,0 +1,44 @@
+.landing-section {
+    background-image: url('./images/landing-image.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .landing-text {
+    color: white;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 5em;
+  }
+  
+  p {
+    font-size: 1.5em;
+    line-height: 1.5;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    font-size: 1.2em;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0069d9;
+  }

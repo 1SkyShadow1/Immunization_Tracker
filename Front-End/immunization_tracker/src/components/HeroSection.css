@@ -1,0 +1,15 @@
+.hero-section {
+    background-image: url('./images/hero-image.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hero-text {
+    color: white;
+    font-size: 5em;
+    text-align: center;
+  }

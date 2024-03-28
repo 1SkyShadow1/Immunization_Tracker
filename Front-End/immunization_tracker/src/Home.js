@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Header from './Header';
+import Footer from './Footer';
+import AboutSection from './components/AboutSection';
+import FeaturesSection from './components/FeaturesSection';
+import CtaSection from './components/CtaSection';
 import "./styles/global.css";
+
 function Home() {
   const [immunizations, setImmunizations] = useState([]);
 
@@ -15,15 +21,14 @@ function Home() {
   }, []);
 
   return (
-    <div>
-      <h2>Immunizations</h2>
+    <>
+      <Header />
       
-      <ul>
-        {immunizations.map(immunization => (
-          <li key={immunization.id}>{immunization.name} - {immunization.date}</li>
-        ))}
-      </ul>
-    </div>
+      <AboutSection />
+      <FeaturesSection />
+      <CtaSection />
+      <Footer />
+    </>
   );
 }
 
