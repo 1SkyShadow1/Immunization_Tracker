@@ -1,17 +1,47 @@
-import React, { useState } from 'react';
+const React = require('react');
+const { useState } = React;
+const axios = require('axios'); // For making API requests
 
 function Registration() {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState(''); // New state for email
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState(''); // For displaying errors
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulate registration logic (replace with your backend logic)
-    console.log(`Username: ${username}, Password: ${password}`);
-    setUsername('');
-    setPassword('');
-    setConfirmPassword('');
+
+    // Basic validation (add more as needed)
+    if (password !== confirmPassword) {
+      setErrorMessage('Passwords do not match');
+      return;
+    }
+
+    // You might want to add email validation here (e.g., using a regular expression)
+
+    try {
+      const response = await axios.post('http://localhost:3000/register', { // Replace with your backend URL
+        username,
+        email, // Include email in the request
+        password,
+      });
+
+      if (response.status === 200) {
+        // Registration successful
+        setErrorMessage(''); // Clear any previous errors
+        setUsername('');
+        setEmail(''); // Clear email field
+        setPassword('');
+        setConfirmPassword('');
+        alert('Registration successful!'); // Or show a success message
+      } else {
+        setErrorMessage('Registration failed. Please try again.');
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('An error occurred. Please try again later.');
+    }
   };
 
   return (
@@ -25,6 +55,14 @@ function Registration() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
+        />
+        <label htmlFor="email">Email:</label> 
+        <input 
+          type="email" 
+          id="email" 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)} 
+          required 
         />
         <label htmlFor="password">Password:</label>
         <input
@@ -44,6 +82,7 @@ function Registration() {
         />
         <button type="submit">Register</button>
       </form>
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
     </div>
   );
 }

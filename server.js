@@ -22,6 +22,7 @@ app.use(basicAuth({ authorizeAsync: async (username, password) => {
 // ... other application logic
 //////////
 
+// Define the registration route handler
 app.post('/api/register', async (req, res) => {
   const { username, password, email } = req.body;
 
@@ -32,8 +33,8 @@ app.post('/api/register', async (req, res) => {
 
   try {
     // Check for existing username
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
+    const existingUser = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
+    if (existingUser.length > 0) {
       return res.status(400).json({ message: 'Username already exists' });
     }
 
@@ -42,25 +43,20 @@ app.post('/api/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // Create new user
-    const newUser = new User({
-      username,
-      password: hashedPassword,
-      email, // If applicable
-    });
+    const newUser = { username, password: hashedPassword, email }; // Adjust properties to match your table schema
 
-    await newUser.save();
+    const result = await pool.query('INSERT INTO users SET ?', [newUser]);
 
     res.status(201).json({ message: 'Registration successful!' });
   } catch (err) {
     console.error(err);
-    if (err.code === 11000) { // Duplicate key error (e.g., username)
+    if (err.code === 'ER_DUP_ENTRY') { // Duplicate username error
       res.status(400).json({ message: 'Username already exists' });
     } else {
       res.status(500).json({ message: 'Registration failed. Please try again.' });
     }
   }
 });
-
 //
 
 app.get('/immunizations', async (req, res) => {
