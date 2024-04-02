@@ -39,19 +39,19 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
   const { username, password } = req.body;
 
-  // // Validate user input (optional)
+  // Validate user input (optional)
 
-  // try {
-  //   const hashedPassword = await bcrypt.hash(password, 10); // Hash password
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10); // Hash password
 
-  //   const [result] = await db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword]);
+    const [result] = await db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword]);
 
-  //   // Optionally generate token for new user
+    // Optionally generate token for new user
 
-  //   res.json({ message: 'Registration successful' });
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(500).json({ message: 'Error registering user' });
-  // }
+    res.json({ message: 'Registration successful' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error registering user' });
+  }
 });
 module.exports = router;
