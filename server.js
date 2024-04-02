@@ -6,7 +6,7 @@ const basicAuth = require('express-basic-auth');
 
 const app = express();
 
-// Login and registration routes (if using a server)
+// Login and registration routes 
 
 // Basic authentication middleware with realm name
 app.use(basicAuth({ authorizeAsync: async (username, password) => {
