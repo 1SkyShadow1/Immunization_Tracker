@@ -3,8 +3,12 @@ const registerUser = require('./users').registerUser;
 const loginUser = require('./users').loginUser;
 const getImmunizations = require('./immunizations').getImmunizations;
 const basicAuth = require('express-basic-auth');
+const cors = require('cors');
 
 const app = express();
+
+// Enable CORS
+app.use(cors());
 
 // Login and registration routes 
 
@@ -47,7 +51,7 @@ app.post('/api/register', async (req, res) => {
 
     const result = await pool.query('INSERT INTO users SET ?', [newUser]);
 
-    res.status(201).json({ message: 'Registration successful!' });
+    res.status(200).json({ message: 'Registration successful!' });
   } catch (err) {
     console.error(err);
     if (err.code === 'ER_DUP_ENTRY') { // Duplicate username error
