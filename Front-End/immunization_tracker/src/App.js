@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
 import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -11,11 +12,17 @@ import UserProfile from "./components/UserProfile.js"
 import Planner from "./Planner.js"
 import Landing from "./components/Landing.js"
 
+
 function App() {
+
+
+
+
   return (
     <Router>
       <div className="App">
         <Header />
+        
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
