@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import Immunizations from "./Immunizations.js";
-import AddImmunization from "./AddImmunization";
 import Login from "./login.js";
 import Registration from "./Registration.js";
 import UserProfile from "./components/UserProfile.js" 
@@ -28,7 +26,6 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/immunizations" element={<Immunizations />} />
           <Route path="/" element={<Landing />} />
-          <Route path="/add-immunization" element={<AddImmunization />} />
           <Route path="/register" element={<Registration />} />
           <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/planner" element={<Planner />} />

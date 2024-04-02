@@ -1,0 +1,14 @@
+.immunizations-container {
+    background-color: beige;
+    padding: 50px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid black;
+    padding: 5px;
+  }
