@@ -18,10 +18,8 @@ function Registration() {
       return;
     }
 
-    // You might want to add email validation here (e.g., using a regular expression)
-
     try {
-      const response = await axios.post('http://localhost:5000/register', { // Replace with your backend URL
+      const response = await axios.post('http://localhost:3000/register', { // Replace with your backend URL
         username,
         email, // Include email in the request
         password,

@@ -27,40 +27,7 @@ app.use(basicAuth({ authorizeAsync: async (username, password) => {
 //////////
 
 // Define the registration route handler
-app.post('/api/register', async (req, res) => {
-  const { username, password, email } = req.body;
 
-  // Basic validation
-  if (!username || !password || !email) {
-    return res.status(400).json({ message: 'Invalid username, password, or email' });
-  }
-
-  try {
-    // Check for existing username
-    const existingUser = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
-    if (existingUser.length > 0) {
-      return res.status(400).json({ message: 'Username already exists' });
-    }
-
-    // Hash password securely (adjust saltRounds for security)
-    const saltRounds = 12; // Adjust this value as needed
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-    // Create new user
-    const newUser = { username, password: hashedPassword, email }; // Adjust properties to match your table schema
-
-    const result = await pool.query('INSERT INTO users SET ?', [newUser]);
-
-    res.status(200).json({ message: 'Registration successful!' });
-  } catch (err) {
-    console.error(err);
-    if (err.code === 'ER_DUP_ENTRY') { // Duplicate username error
-      res.status(400).json({ message: 'Username already exists' });
-    } else {
-      res.status(500).json({ message: 'Registration failed. Please try again.' });
-    }
-  }
-});
 //
 
 app.get('/immunizations', async (req, res) => {
@@ -76,6 +43,40 @@ app.get('/immunizations', async (req, res) => {
   }
 });
 
+app.post('/register', async (req, res) => {
+  const { username, password, email } = req.body;
+
+  // Basic validation
+  if (!username || !password || !email) {
+    return res.status(400).json({ message: 'Invalid username, password, or email' });
+  }
+
+  try {
+    // Check for existing username
+    const existingUser = await pool.query('SELECT * FROM Users WHERE username = ?', [username]);
+    if (existingUser.length > 0) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
+    // Hash password securely
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Create new user
+    const newUser = { username, password: hashedPassword, email };
+
+   // const result = await pool.query('INSERT INTO users SET ?', [newUser]);
+
+    res.status(201).json({ message: 'Registration successful!' });
+  } catch (err) {
+    console.error(err);
+    if (err.code === 'ER_DUP_ENTRY') {
+      res.status(400).json({ message: 'Username already exists' });
+    } else {
+      res.status(500).json({ message: 'Registration failed. Please try again.' });
+    }
+  }
+});
 // ... other application logic
 
 app.listen(5000, () => {
