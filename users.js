@@ -37,14 +37,13 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-  const { username, password, email } = req.body;
+  const { username, password } = req.body;
 
-  // Validate user input (optional)
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10); // Hash password
 
-    const [result] = await db.query('INSERT INTO users (username, password, email) VALUES (?, ?, ?)', [username, hashedPassword, email]);
+    const [result] = await db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword]);
 
     // Optionally generate token for new user
 

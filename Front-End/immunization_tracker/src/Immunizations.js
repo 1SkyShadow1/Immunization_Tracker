@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { verifyJWT } from '../utils/verifyJWT';
+//import { verifyJWT } from '/verifyJWT';
 import axios from 'axios';
 import "./Immunizations.css";
 
