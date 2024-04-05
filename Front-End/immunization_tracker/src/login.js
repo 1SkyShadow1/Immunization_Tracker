@@ -1,28 +1,37 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './style.css'
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/login', {
+      const response = await axios.post('http://localhost:5000/login', {
         username,
         password,
       });
+
+      if (response.data.success) {
+        // Login was successful, redirect to home page
+        navigate('/home'); // Use navigate instead of history.push
+      } else {
+        // Login was not successful, display an error message
+        setErrorMessage(response.data.message || 'Login failed');
+      }
     } catch (error) {
       console.error(error);
-      setErrorMessage(error.response?.data?.message || 'Login failed'); // Handle potential error messages from the backend
+      setErrorMessage(error.response?.data?.message || 'Login failed');
     }
 
     setUsername('');
     setPassword('');
   };
-
   return (
     <div className="login-container">
       <h1>Login</h1>
@@ -46,8 +55,9 @@ function Login() {
         <button type="submit">Login</button>
       </form>
       <p>Don't have an account? <a href="/register">Register here</a></p>
+      {errorMessage && <p className="error">{errorMessage}</p>}
     </div>
   );
-}
+  }
 
 export default Login;

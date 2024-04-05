@@ -14,7 +14,7 @@ const LandingSection = () => {
             <li>Share your child's immunization records with your doctor or other caregivers.</li>
           </ul>
           <br/>
-          <a href="/home" className="btn btn-primary">Get started today!</a>
+          <a href="/login" className="btn btn-primary">Get started today!</a>
         </div>
       </div>
     </section>
