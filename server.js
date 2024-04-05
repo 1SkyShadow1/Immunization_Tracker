@@ -1,84 +1,58 @@
 const express = require('express');
-const registerUser = require('./users').registerUser;
-const loginUser = require('./users').loginUser;
-const getImmunizations = require('./immunizations').getImmunizations;
-const basicAuth = require('express-basic-auth');
+const mysql = require('mysql2');
+const bodyParser = require('body-parser');
 const cors = require('cors');
+const bcrypt = require('bcrypt'); 
+require('dotenv').config();
 
 const app = express();
+app.use(bodyParser.json());
+app.use(cors({
+origin: 'http://localhost:3000'
+})); // Use cors middleware to handle CORS
 
-// Enable CORS
-app.use(cors());
-
-// Login and registration routes 
-
-// Basic authentication middleware with realm name
-app.use(basicAuth({ authorizeAsync: async (username, password) => {
-  try {
-    const user = await loginUser(username, password); // Use your login function
-    return user !== undefined; // Successful login if user object exists
-  } catch (error) {
-    console.error(error.message);
-    return false; // Login failed
-  }
-} }, { challenge: true, realm: 'Immunization Tracker' }))
-
-// ... other application logic
-//////////
-
-// Define the registration route handler
-
-//
-
-app.get('/immunizations', async (req, res) => {
-  try {
-    // User ID retrieval from request object after successful basic auth
-    const userId = req.auth.user; // Assuming 'user' property in req.auth after basic auth
-
-    const immunizations = await getImmunizations(userId);
-    res.json(immunizations); // Send immunization records to the client
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ message: 'Error retrieving immunizations' });
-  }
+// Create a MySQL connection
+const connection = mysql.createConnection({
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
 });
+
+// Connect to the MySQL database
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to the database: ' + err.stack);
+    return;
+  }
+  console.log('Connected to the database');
+});
+
 
 app.post('/register', async (req, res) => {
-  const { username, password, email } = req.body;
-
-  // Basic validation
-  if (!username || !password || !email) {
-    return res.status(400).json({ message: 'Invalid username, password, or email' });
-  }
-
+  const { name, email, password } = req.body;
+  
   try {
-    // Check for existing username
-    const existingUser = await pool.query('SELECT * FROM Users WHERE username = ?', [username]);
-    if (existingUser.length > 0) {
-      return res.status(400).json({ message: 'Username already exists' });
-    }
-
-    // Hash password securely
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-    // Create new user
-    const newUser = { username, password: hashedPassword, email };
-
-   // const result = await pool.query('INSERT INTO users SET ?', [newUser]);
-
-    res.status(201).json({ message: 'Registration successful!' });
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+  
+    // Insert the data into the database
+    const query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
+    connection.query(query, [name, email, hashedPassword], (err, result) => {
+      if (err) {
+        console.error('Error inserting data into the database: ' + err.stack);
+        return res.status(500).send('Error inserting data into the database');
+      }
+      console.log('Data inserted into the database');
+      res.status(200).json({ success: true, message: 'Registration successful' });
+    });
   } catch (err) {
-    console.error(err);
-    if (err.code === 'ER_DUP_ENTRY') {
-      res.status(400).json({ message: 'Username already exists' });
-    } else {
-      res.status(500).json({ message: 'Registration failed. Please try again.' });
-    }
+    console.error('Error hashing password: ' + err.stack);
+    return res.status(500).send('Error hashing password');
   }
 });
-// ... other application logic
 
+// Start the server
 app.listen(5000, () => {
-  console.log('Server listening on port 5000');
+  console.log('Server is running on port 5000');
 });

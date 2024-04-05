@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import Immunizations from "./Immunizations.js";
 import Login from "./login.js";
-import Registration from "./Registration.js";
+ import Registration from "./Registration.js";
 import UserProfile from "./components/UserProfile.js" 
 import Planner from "./Planner.js"
 import Landing from "./components/Landing.js"
