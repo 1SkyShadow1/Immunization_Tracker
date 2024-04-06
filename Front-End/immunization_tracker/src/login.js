@@ -7,7 +7,7 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate(); // Use useNavigate instead of useHistory
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,7 +18,6 @@ function Login() {
       });
 
       if (response.data.success) {
-        // Login was successful, redirect to home page
         navigate('/home'); // Use navigate instead of history.push
       } else {
         // Login was not successful, display an error message

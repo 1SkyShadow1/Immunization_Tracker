@@ -50,4 +50,19 @@ pool.query(
 ) .then(()=>{
   console.log('Immunization table created successfully');
 })
+
+// // create the reminders table
+// pool.query(
+//   `CREATE TABLE IF NOT EXISTS Reminders (
+//     reminder_id INT AUTO_INCREMENT,
+//     user_id INT NOT NULL,
+//     title VARCHAR(255) NOT NULL,
+//     date DATE NOT NULL,
+//     PRIMARY KEY (reminder_id),
+//     FOREIGN KEY (user_id) REFERENCES Users(user_id)
+//   );
+//   `
+// ).then(() => {
+//   console.log('Reminders table created successfully');
+// });
 module.exports = pool

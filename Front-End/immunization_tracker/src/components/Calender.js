@@ -1,19 +1,23 @@
+// Calendar.js
 import React, { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import "./Calender.css"
+import Reminder from "./reminders.js";
 
 const Calendar = () => {
   const [events, setEvents] = useState([]);
 
-  const handleDateClick = (arg) => {
-    // Handle date click to create a new event
+  const addEvent = (title, date) => {
+    setEvents([...events, { title, date }]);
   };
 
-  const handleEventClick = (arg) => {
-    // Handle event click to edit or delete an event
+  const handleEventClick = (clickInfo) => {
+    if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+      clickInfo.event.remove();
+    }
   };
 
   return (
@@ -22,9 +26,9 @@ const Calendar = () => {
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         events={events}
-        dateClick={handleDateClick}
         eventClick={handleEventClick}
       />
+      <Reminder onAdd={addEvent} />
     </div>
   );
 };
