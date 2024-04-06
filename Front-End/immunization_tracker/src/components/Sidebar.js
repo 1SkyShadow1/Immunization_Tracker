@@ -26,7 +26,7 @@ const Sidebar = () => {
     <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
       <GiHamburgerMenu className="sidebar-toggle" onClick={toggleSidebar} size={30} />
       <ul>
-        <li><Link to='/'><GiHomeGarage size={20} /> Home</Link></li>
+        <li><Link to='/home'><GiHomeGarage size={20} /> Home</Link></li>
         <li><Link to='/user-profile'><FaUser size={20} /> Profile</Link></li>
         <li><Link to='/planner'><FaRegCalendarAlt size={20} /> Planner</Link></li>
         <li><button onClick={handleLogout}><FaSignOutAlt size={20} /> Logout</button></li>

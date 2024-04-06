@@ -12,17 +12,17 @@ import { Routes, Route } from "react-router-dom";
 
 const Main = () => {
   const location = useLocation();
-  const hideSidebar = ['/landing', '/login', '/register'].includes(location.pathname);
+  const hideSidebar = ['/', '/login', '/register'].includes(location.pathname);
 
   return (
     <>
       <Header />
       {!hideSidebar && <Sidebar />}
       <Routes>
-        <Route path="/landing" element={<Landing />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/planner" element={<Planner />} />
       </Routes>
