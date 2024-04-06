@@ -18,6 +18,7 @@ function Login() {
       });
 
       if (response.data.success) {
+        // Login was successful, redirect to home page
         navigate('/home'); // Use navigate instead of history.push
       } else {
         // Login was not successful, display an error message
