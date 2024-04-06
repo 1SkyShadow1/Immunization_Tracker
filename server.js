@@ -41,41 +41,41 @@ app.post('/reminders', (req, res) => {
   });
 });
 
-// app.post('/register', async (req, res) => {
-//   const { name, email, password } = req.body;
+app.post('/register', async (req, res) => {
+  const { name, email, password } = req.body;
   
-//   // Check if user already exists
-//   const checkUserQuery = 'SELECT * FROM users WHERE email = ?';
-//   connection.query(checkUserQuery, [email], async (err, result) => {
-//     if (err) {
-//       console.error('Error checking user in the database: ' + err.stack);
-//       return res.status(500).send('Error checking user in the database');
-//     }
+  // Check if user already exists
+  const checkUserQuery = 'SELECT * FROM users WHERE email = ?';
+  connection.query(checkUserQuery, [email], async (err, result) => {
+    if (err) {
+      console.error('Error checking user in the database: ' + err.stack);
+      return res.status(500).send('Error checking user in the database');
+    }
 
-//     if (result.length > 0) {
-//       return res.status(400).json({ success: false, message: 'User already exists' });
-//     } else {
-//       try {
-//         // Hash the password
-//         const hashedPassword = await bcrypt.hash(password, 10);
+    if (result.length > 0) {
+      return res.status(400).json({ success: false, message: 'User already exists' });
+    } else {
+      try {
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
       
-//         // Insert the data into the database
-//         const insertUserQuery = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
-//         connection.query(insertUserQuery, [name, email, hashedPassword], (err, result) => {
-//           if (err) {
-//             console.error('Error inserting data into the database: ' + err.stack);
-//             return res.status(500).send('Error inserting data into the database');
-//           }
-//           console.log('Data inserted into the database');
-//           res.status(200).json({ success: true, message: 'Registration successful' });
-//         });
-//       } catch (err) {
-//         console.error('Error hashing password: ' + err.stack);
-//         return res.status(500).send('Error hashing password');
-//       }
-//     }
-//   });
-// });
+        // Insert the data into the database
+        const insertUserQuery = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
+        connection.query(insertUserQuery, [name, email, hashedPassword], (err, result) => {
+          if (err) {
+            console.error('Error inserting data into the database: ' + err.stack);
+            return res.status(500).send('Error inserting data into the database');
+          }
+          console.log('Data inserted into the database');
+          res.status(200).json({ success: true, message: 'Registration successful' });
+        });
+      } catch (err) {
+        console.error('Error hashing password: ' + err.stack);
+        return res.status(500).send('Error hashing password');
+      }
+    }
+  });
+});
 
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
