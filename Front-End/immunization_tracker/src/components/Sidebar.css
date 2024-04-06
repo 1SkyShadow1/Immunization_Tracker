@@ -1,0 +1,71 @@
+/* Sidebar.css */
+.sidebar {
+    width: 150px;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #2c3e50;
+    padding: 20px;
+    transition: transform 0.3s ease-in-out;
+    color: #ecf0f1;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebar.closed {
+    transform: translateX(-150px); /* Adjust this to match the width of the sidebar */
+}
+
+.sidebar-toggle {
+    position: absolute; /* Make the position absolute */
+    left: 160px; /* Position it to the right of the sidebar */
+    top: 10px;
+    color: #2c3e50;
+    cursor: pointer;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.sidebar li a {
+    color: #ecf0f1;
+    text-decoration: none;
+}
+
+.sidebar li a:hover {
+    color: #bdc3c7;
+}
+
+.sidebar li a svg {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.sidebar button {
+    background: none;
+    border: none;
+    color: #ecf0f1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 0;
+  }
+  
+  .sidebar button:hover {
+    color: #bdc3c7;
+  }
+  
+  .sidebar button svg {
+    margin-right: 10px;
+  }
