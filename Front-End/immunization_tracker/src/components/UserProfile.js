@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import "./UserProfile.css";
+
 const UserProfile = () => {
   const [formData, setFormData] = useState({
     childName: "",
@@ -9,6 +11,7 @@ const UserProfile = () => {
     parentPhone: "",
     childImage: null,
   });
+  const [message, setMessage] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,10 +23,18 @@ const UserProfile = () => {
     setFormData((prevData) => ({ ...prevData, childImage: imageFile }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically make a request to your backend to save the user profile data
-    console.log("User profile data submitted successfully!");
+    try {
+      const response = await axios.post('http://localhost:5000/user-profile', formData);
+      if (response.data.success) {
+        setMessage('User profile data submitted successfully!');
+      } else {
+        setMessage('Failed to update profile: ' + (response.data.message || 'Unknown error'));
+      }
+    } catch (error) {
+      setMessage('An error occurred while updating the profile: ' + error.message);
+    }
   };
 
   return (
@@ -50,6 +61,7 @@ const UserProfile = () => {
 
         <button type="submit">Save</button>
       </form>
+      {message && <p>{message}</p>}
     </div>
   );
 };
