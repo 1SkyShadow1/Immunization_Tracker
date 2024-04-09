@@ -67,12 +67,12 @@ pool.query(
 });
 
 // Drop the UserProfile table if it exists
-// pool.query(`
-//   DROP TABLE IF EXISTS UserProfile;
-// `).then(() => {
-//   console.log('UserProfile table dropped successfully');
-//   // Then you can create the new UserProfile table here
-// });
+pool.query(`
+  DROP TABLE IF EXISTS UserProfile;
+`).then(() => {
+  console.log('UserProfile table dropped successfully');
+  // Then you can create the new UserProfile table here
+});
 // Create the UserProfile table if it doesn't exist
 pool.query(`
   CREATE TABLE IF NOT EXISTS UserProfile (
@@ -83,7 +83,6 @@ pool.query(`
     parentName VARCHAR(255) NOT NULL,
     parentEmail VARCHAR(255) NOT NULL,
     parentPhone VARCHAR(255) NOT NULL,
-    childImage BLOB,
     PRIMARY KEY (profile_id),
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
   );

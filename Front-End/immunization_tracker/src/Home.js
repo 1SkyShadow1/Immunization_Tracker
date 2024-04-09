@@ -6,17 +6,17 @@ import CtaSection from './components/CtaSection';
 import "./styles/global.css";
 
 function Home() {
-  const [immunizations, setImmunizations] = useState([]);
+  // const [immunizations, setImmunizations] = useState([]);
 
-  useEffect(() => {
-    axios.get("/immunizations")
-      .then(res => {
-        setImmunizations(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("/immunizations")
+  //     .then(res => {
+  //       setImmunizations(res.data);
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   return (
     <>

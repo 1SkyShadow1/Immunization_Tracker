@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import axios from 'axios';
 import "./UserProfile.css";
 
@@ -18,24 +18,42 @@ const UserProfile = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleImageChange = (e) => {
-    const imageFile = e.target.files[0];
-    setFormData((prevData) => ({ ...prevData, childImage: imageFile }));
-  };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const user_id = window.sessionStorage.getItem('user_id');
+  //     const response = await axios.post('http://localhost:5000/user-profile', {user_id, ...formData});
+  //     if (response.data.success) {
+  //       setMessage('User profile data submitted successfully!');
+  //     } else {
+  //       setMessage('Failed to update profile: ' + (response.data.message || 'Unknown error'));
+  //     }
+  //   } catch (error) {
+  //     setMessage('An error occurred while updating the profile: ' + error.message);
+  //   }
+  // };
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5000/user-profile', formData);
-      if (response.data.success) {
-        setMessage('User profile data submitted successfully!');
-      } else {
-        setMessage('Failed to update profile: ' + (response.data.message || 'Unknown error'));
-      }
-    } catch (error) {
-      setMessage('An error occurred while updating the profile: ' + error.message);
+  e.preventDefault();
+  try {
+    const user_id = window.sessionStorage.getItem('user_id');
+    const formDataObj = {user_id, ...formData};
+    const data = new FormData();
+    for (const key in formDataObj) {
+      data.append(key, formDataObj[key]);
     }
-  };
+    const response = await axios.post('http://localhost:5000/user-profile', data);
+    if (response.data.success) {
+      setMessage('User profile data submitted successfully!');
+    } else {
+      setMessage('Failed to update profile: ' + (response.data.message || 'Unknown error'));
+    }
+  } catch (error) {
+    console.error(error);
+    setMessage('An error occurred while updating the profile: ' + error.message);
+  }
+};
+
 
   return (
     <div className="user-profile-form">
@@ -56,9 +74,7 @@ const UserProfile = () => {
         <label htmlFor="parentPhone">Parent's Phone Number</label>
         <input type="tel" name="parentPhone" value={formData.parentPhone} onChange={handleChange} />
 
-        <label htmlFor="childImage">Child's Image</label>
-        <input type="file" name="childImage" onChange={handleImageChange} />
-
+      
         <button type="submit">Save</button>
       </form>
       {message && <p>{message}</p>}
