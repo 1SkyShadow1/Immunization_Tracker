@@ -9,29 +9,30 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate(); 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5000/login', {
-        username,
-        password,
-      });
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await axios.post('http://localhost:5000/login', {
+      username,
+      password,
+    });
 
-      if (response.data.success) {
-        // Login was successful, redirect to home page
-        navigate('/home'); // Use navigate instead of history.push
-      } else {
-        // Login was not successful, display an error message
-        setErrorMessage(response.data.message || 'Login failed');
-      }
-    } catch (error) {
-      console.error(error);
-      setErrorMessage(error.response?.data?.message || 'Login failed');
+    if (response.data.success) {
+      // Login was successful, store user_id in session storage and redirect to home page
+      window.sessionStorage.setItem('user_id', response.data.user.id);
+      navigate('/home'); // Use navigate instead of history.push
+    } else {
+      // Login was not successful, display an error message
+      setErrorMessage(response.data.message || 'Login failed');
     }
+  } catch (error) {
+    console.error(error);
+    setErrorMessage(error.response?.data?.message || 'Login failed');
+  }
 
-    setUsername('');
-    setPassword('');
-  };
+  setUsername('');
+  setPassword('');
+};
   return (
     <div className="login-container">
       <h1>Login</h1>

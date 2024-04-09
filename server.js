@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt'); 
 require('dotenv').config();
-
 const app = express();
 app.use(bodyParser.json());
 app.use(cors({
@@ -38,6 +37,33 @@ app.post('/reminders', (req, res) => {
     }
     console.log('Reminder inserted into the database');
     res.status(201).json({ id: results.insertId, user_id, title, date });
+  });
+});
+
+app.get('/reminders', (req, res) => {
+  const { user_id } = req.query;
+  const query = 'SELECT * FROM reminders WHERE user_id = ?';
+  connection.query(query, [user_id], (error, results) => {
+    if (error) {
+      console.error('Error fetching reminders from the database: ' + error.stack);
+      return res.status(500).send('Error fetching reminders from the database');
+    }
+    res.status(200).json(results);
+  });
+});
+
+app.delete('/reminders/:id', (req, res) => {
+  const { id } = req.params;
+  const sql = 'DELETE FROM Reminders WHERE reminder_id = ?';
+
+  connection.query(sql, id, (err, result) => {
+    if (err) {
+      console.error('Error deleting reminder: ', err);
+      res.status(500).json({ message: 'Error deleting reminder' });
+    } else {
+      console.log('Reminder deleted successfully: ', result);
+      res.status(200).json({ message: 'Reminder deleted successfully' });
+    }
   });
 });
 
@@ -105,40 +131,37 @@ app.post('/login', (req, res) => {
     }
 
     // User is authenticated, redirect to home page
-    res.status(200).json({ success: true, user: { username: user.username, email: user.email } });
+    res.status(200).json({ success: true, user: {id: user.user_id, username: user.username, email: user.email } });
   });
 });
-app.post('/user-profile', (req, res) => {
-  const { user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone, childImage } = req.body;
-
-  // Check if user_id is null
-  if (!user_id) {
-    console.error('user_id is null');
-    return res.status(400).send('user_id cannot be null');
-  }
-
-  // Continue with inserting data into the database...
-});
 
 app.post('/user-profile', (req, res) => {
-  const { user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone, childImage } = req.body;
-  const query = 'INSERT INTO UserProfile (user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone, childImage) VALUES (?, ?, ?, ?, ?, ?, ?)';
-  connection.query(query, [user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone, childImage], (error, results) => {
+  const { user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone } = req.body;
+  
+
+  const query = 'INSERT INTO userprofile (user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone) VALUES (?, ?, ?, ?, ?, ?)';
+  connection.query(query, [user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone], (error, results) => {
     if (error) {
-      console.error('Error inserting user profile into the database: ' + error.stack);
-      return res.status(500).send('Error inserting user profile into the database');
+      console.error('Error inserting user profile into the database: ', error);
+      if (error.code === 'ER_NO_REFERENCED_ROW_2') {
+        return res.status(400).send('Invalid user ID. Please ensure the user exists.'); 
+      } else if (error.code === 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD') {
+        return res.status(400).send('Incorrect data format for one or more fields.');
+      } else {
+        return res.status(500).send('An error occurred while processing your request.');
+      }
     }
     console.log('User profile inserted into the database');
-    res.status(201).json({ id: results.insertId, user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone, childImage });
+    res.status(201).json({ success: true, user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone});
   });
 });
 
 app.post('/user-profile', (req, res) => {
-  const { childName, dateOfBirth, parentName, parentEmail, parentPhone, childImage, user_id } = req.body;
+  const { childName, dateOfBirth, parentName, parentEmail, parentPhone, user_id } = req.body;
 
   // Query to update the user profile
-  const updateUserProfileQuery = 'UPDATE UserProfile SET childName = ?, dateOfBirth = ?, parentName = ?, parentEmail = ?, parentPhone = ?, childImage = ? WHERE user_id = ?';
-  connection.query(updateUserProfileQuery, [childName, dateOfBirth, parentName, parentEmail, parentPhone, childImage, user_id], (err, result) => {
+  const updateUserProfileQuery = 'UPDATE UserProfile SET childName = ?, dateOfBirth = ?, parentName = ?, parentEmail = ?, parentPhone = ?, WHERE user_id = ?';
+  connection.query(updateUserProfileQuery, [childName, dateOfBirth, parentName, parentEmail, parentPhone, user_id], (err, result) => {
     if (err) {
       console.error('Error updating user profile: ' + err.stack);
       return res.status(500).send('Error updating user profile');
