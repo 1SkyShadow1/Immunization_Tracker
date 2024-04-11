@@ -9,7 +9,6 @@ const UserProfile = () => {
     parentName: "",
     parentEmail: "",
     parentPhone: "",
-    childImage: null,
   });
   const [message, setMessage] = useState(null);
 
@@ -19,20 +18,7 @@ const UserProfile = () => {
   };
 
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const user_id = window.sessionStorage.getItem('user_id');
-  //     const response = await axios.post('http://localhost:5000/user-profile', {user_id, ...formData});
-  //     if (response.data.success) {
-  //       setMessage('User profile data submitted successfully!');
-  //     } else {
-  //       setMessage('Failed to update profile: ' + (response.data.message || 'Unknown error'));
-  //     }
-  //   } catch (error) {
-  //     setMessage('An error occurred while updating the profile: ' + error.message);
-  //   }
-  // };
+
   const handleSubmit = async (e) => {
   e.preventDefault();
   try {
