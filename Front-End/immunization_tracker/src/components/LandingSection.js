@@ -1,17 +1,24 @@
 import React from 'react';
 import "./LandingSection.css"
 
+
 const LandingSection = () => {
+  
+  const sectionStyle = {
+    backgroundImage: `url(./Designer.png)`,
+    backgroundSize: 'cover', 
+    backgroundRepeat: 'no-repeat', 
+  };
+  
+  
   return (
-    <section className="landing-section">
+    <section className="landing-section" style={sectionStyle}>
       <div className="container">
         <div className="landing-text">
-          <h1>Immunization Tracker</h1>
-          <p>Immunization Tracker is the easiest way to keep track of your child's immunizations.</p>
-          <ul>
-            <li>Track all of your child's immunizations in one place.</li>
-            <li>Get reminders when your child's next immunization is due.</li>
-            <li>Share your child's immunization records with your doctor or other caregivers.</li>
+          <ul className="landing-list">
+            <li className="list-item">Track all of your child's immunizations in one place.</li>
+            <li className="list-item">Get reminders when your child's next immunization is due.</li>
+            <li className="list-item">Share your child's immunization records with your doctor or other caregivers.</li>
           </ul>
           <br/>
           <a href="/login" className="btn btn-primary">Get started today!</a>

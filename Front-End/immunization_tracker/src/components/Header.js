@@ -1,9 +1,12 @@
 import React from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSyringe } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
   return (
-    <header>
-      <h2>Immunization Tracker</h2>
+    <header className="header-body">
+      <h2 className="header-text"> <FontAwesomeIcon icon={faSyringe}  />Immunization Tracker</h2>
+     
     </header>
   );
 }

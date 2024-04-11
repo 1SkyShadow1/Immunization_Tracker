@@ -10,12 +10,18 @@
 
 body {
   font-family: 'Helvetica', 'Arial', sans-serif;
-  background-color: beige;
+  background-color: rgb(17, 86, 132);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cg fill='%23dcdcdc' fill-opacity='0.4'%3E%3Cpath d='M0 0h8v8H0zM2 2h4v4H2z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
+  text-align: center;
+  
+}
+
+h1{
+  font-size: 3em ;
 }
 
 a {
@@ -27,6 +33,31 @@ a:hover {
   color: #0056b3;
 }
 
+.cta-text{
+  text-align: center;
+}
+
+.landing-list{
+  margin-top: 18em;
+}
+.list-item{
+  font-size: 2em;
+  text-align: center;
+  color: rgb(97, 16, 97);
+}
+.header-text{
+  font-size: 4em;
+  text-align: center;
+}
+
+/* .header-body{
+  background-color: red;
+} */
+
+.foot-text{
+  font-size: medium;
+
+}
 /* Custom styles */
 
 .container {
