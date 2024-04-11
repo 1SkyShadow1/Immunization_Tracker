@@ -3,7 +3,7 @@ import React from "react";
 function Footer() {
   return (
     <footer>
-      <p>Copyright © 2023 Immunization Tracker</p>
+      <p className="foot-text">Copyright © 2024 Immunization Tracker</p>
     </footer>
   );
 }
