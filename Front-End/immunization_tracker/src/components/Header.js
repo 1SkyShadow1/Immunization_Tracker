@@ -3,7 +3,7 @@ import React from "react";
 function Header() {
   return (
     <header>
-      <h1>Immunization Tracker</h1>
+      <h2>Immunization Tracker</h2>
     </header>
   );
 }
