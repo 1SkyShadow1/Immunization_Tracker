@@ -47,7 +47,7 @@ function Reminders({ onAdd }) {
 
   return (
     <div>
-      <form onSubmit={addReminder}>
+      <form className='form-unit-2' onSubmit={addReminder}>
         <input
           type="text"
           value={newReminder}
@@ -55,12 +55,14 @@ function Reminders({ onAdd }) {
           required
           placeholder="Event title"
         />
+        
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
         />
+      
         <button type="submit">Add Reminder</button>
       </form>
     </div>

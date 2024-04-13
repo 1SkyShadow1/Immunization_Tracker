@@ -18,7 +18,6 @@ const handleSubmit = async (e) => {
     });
 
     if (response.data.success) {
-      // Login was successful, store user_id in session storage and redirect to home page
       window.sessionStorage.setItem('user_id', response.data.user.id);
       navigate('/home'); // Use navigate instead of history.push
     } else {

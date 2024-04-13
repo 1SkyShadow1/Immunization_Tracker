@@ -3,12 +3,16 @@ const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt'); 
+const db = require('./db');
 require('dotenv').config();
 const app = express();
 app.use(bodyParser.json());
 app.use(cors({
 origin: 'http://localhost:3000'
 }));
+
+// This is how we create the tables in the database
+db.setupDatabase();
 
 // Create a MySQL connection
 const connection = mysql.createConnection({
@@ -27,6 +31,7 @@ connection.connect((err) => {
   console.log('Connected to the database');
 });
 
+// reminders
 app.post('/reminders', (req, res) => {
   const { user_id, title, date } = req.body;
   const query = 'INSERT INTO reminders (user_id, title, date) VALUES (?, ?, ?)';
@@ -67,6 +72,7 @@ app.delete('/reminders/:id', (req, res) => {
   });
 });
 
+  // register
 app.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
   
@@ -103,6 +109,7 @@ app.post('/register', async (req, res) => {
   });
 });
 
+  // login
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
@@ -135,14 +142,17 @@ app.post('/login', (req, res) => {
   });
 });
 
-app.post('/user-profile', (req, res) => {
-  const { user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone } = req.body;
-  
 
-  const query = 'INSERT INTO userprofile (user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone) VALUES (?, ?, ?, ?, ?, ?)';
+
+        // userprofile
+app.post('/child-profile', (req, res) => {
+  
+  const { user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone } = req.body;
+
+  const query = 'INSERT INTO childprofile (user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone) VALUES (?, ?, ?, ?, ?, ?)';
   connection.query(query, [user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone], (error, results) => {
     if (error) {
-      console.error('Error inserting user profile into the database: ', error);
+      console.error('Error inserting child profile into the database: ', error);
       if (error.code === 'ER_NO_REFERENCED_ROW_2') {
         return res.status(400).send('Invalid user ID. Please ensure the user exists.'); 
       } else if (error.code === 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD') {
@@ -151,39 +161,36 @@ app.post('/user-profile', (req, res) => {
         return res.status(500).send('An error occurred while processing your request.');
       }
     }
-    console.log('User profile inserted into the database');
+    console.log('Child profile inserted into the database');
     res.status(201).json({ success: true, user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone});
   });
 });
-
-app.post('/user-profile', (req, res) => {
-  const { childName, dateOfBirth, parentName, parentEmail, parentPhone, user_id } = req.body;
-
-  // Query to update the user profile
-  const updateUserProfileQuery = 'UPDATE UserProfile SET childName = ?, dateOfBirth = ?, parentName = ?, parentEmail = ?, parentPhone = ?, WHERE user_id = ?';
-  connection.query(updateUserProfileQuery, [childName, dateOfBirth, parentName, parentEmail, parentPhone, user_id], (err, result) => {
-    if (err) {
-      console.error('Error updating user profile: ' + err.stack);
-      return res.status(500).send('Error updating user profile');
-    }
-    console.log('User profile updated successfully');
-    res.status(200).json({ success: true, message: 'Profile updated successfully' });
-  });
-});
-
-app.get('/user-profile/:user_id', (req, res) => {
+app.get('/childprofile/:user_id', (req, res) => {
   const { user_id } = req.params;
-
-  // Query to fetch the user profile
-  const fetchUserProfileQuery = 'SELECT * FROM UserProfile WHERE user_id = ?';
-  connection.query(fetchUserProfileQuery, [user_id], (err, result) => {
-    if (err) {
-      console.error('Error fetching user profile: ' + err.stack);
-      return res.status(500).send('Error fetching user profile');
+  connection.query('SELECT profile_id, childName FROM childprofile WHERE user_id = ?', [user_id], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.json({ success: false, message: error.message });
+    } else {
+      res.json({ success: true, children: results });
     }
-    res.status(200).json({ success: true, data: result });
   });
 });
+
+// Immunizations
+app.post('/immunizations', (req, res) => {
+  const { profile_id, child_name, vaccine_name, date_administered, next_due_date, notes, doctor_name } = req.body;
+  const query = 'INSERT INTO immunizations (profile_id, child_name, vaccine_name, date_administered, next_due_date, notes, doctor_name) VALUES (?, ?, ?, ?, ?, ?, ?)';
+  connection.query(query, [profile_id, child_name, vaccine_name, date_administered, next_due_date, notes, doctor_name], (error, results) => {
+    if (error) {
+      console.error('Error inserting immunization into the database: ' + error.stack);
+      return res.status(500).send('Error inserting immunization into the database');
+    }
+    console.log('Immunization inserted into the database');
+    res.status(201).json({ id: results.insertId, profile_id, child_name, vaccine_name, date_administered, next_due_date, notes,doctor_name });
+  });
+});
+
 
 // Start the server
 app.listen(5000, () => {

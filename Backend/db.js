@@ -7,7 +7,10 @@ const pool = mysql.createPool({
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE,
 });
-// create users table
+
+
+const setupDatabase = () =>{
+//create users table
 pool.query(`
   CREATE TABLE IF NOT EXISTS Users (
     user_id INT AUTO_INCREMENT,
@@ -20,31 +23,35 @@ pool.query(`
   console.log('Users table created successfully');
 });
 
-// Create the children table if it doesn't exist
+// Create the ChildProfile table
 pool.query(`
-  CREATE TABLE IF NOT EXISTS Children (
-    child_id INT AUTO_INCREMENT,
+  CREATE TABLE IF NOT EXISTS ChildProfile (
+    profile_id INT AUTO_INCREMENT,
     user_id INT NOT NULL,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
-    date_of_birth DATE NOT NULL,
-    PRIMARY KEY (child_id),
+    childName VARCHAR(255) NOT NULL,
+    dateOfBirth DATE NOT NULL,
+    parentName VARCHAR(255) NOT NULL,
+    parentEmail VARCHAR(255) NOT NULL,
+    parentPhone VARCHAR(255) NOT NULL,
+    PRIMARY KEY (profile_id),
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
   );
 `).then(() => {
-  console.log('Children table created successfully');
+  console.log('ChildProfile table created successfully');
 });
 
-// create the Immunization table
+// create the Immunizations table
 pool.query(
- ` CREATE TABLE IF NOT EXISTS Immunizations (immunization_id INT NOT NULL AUTO_INCREMENT,
-  child_id INT NOT NULL,
+ ` CREATE TABLE IF NOT EXISTS Immunizations (immunization_id INT NOT NULL AUTO_INCREMENT
+  ,profile_id INT NOT NULL,
+  child_name VARCHAR(255) NOT NULL,
   vaccine_name VARCHAR(255) NOT NULL,
   date_administered DATE NOT NULL,
   next_due_date DATE NOT NULL,
+  doctor_name VARCHAR(255),
   notes TEXT,
   PRIMARY KEY (immunization_id),
-  FOREIGN KEY (child_id) REFERENCES Children(child_id)
+  FOREIGN KEY (profile_id) REFERENCES ChildProfile(profile_id)
   )
   `
 ) .then(()=>{
@@ -65,28 +72,8 @@ pool.query(
 ).then(() => {
   console.log('Reminders table created successfully');
 });
-
-// Drop the UserProfile table if it exists
-pool.query(`
-  DROP TABLE IF EXISTS UserProfile;
-`).then(() => {
-  console.log('UserProfile table dropped successfully');
-  // Then you can create the new UserProfile table here
-});
-// Create the UserProfile table if it doesn't exist
-pool.query(`
-  CREATE TABLE IF NOT EXISTS UserProfile (
-    profile_id INT AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    childName VARCHAR(255) NOT NULL,
-    dateOfBirth DATE NOT NULL,
-    parentName VARCHAR(255) NOT NULL,
-    parentEmail VARCHAR(255) NOT NULL,
-    parentPhone VARCHAR(255) NOT NULL,
-    PRIMARY KEY (profile_id),
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
-  );
-`).then(() => {
-  console.log('UserProfile table created successfully');
-});
-module.exports = pool
+};
+module.exports = {
+  pool,
+  setupDatabase
+};

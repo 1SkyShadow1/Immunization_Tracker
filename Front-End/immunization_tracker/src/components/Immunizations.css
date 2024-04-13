@@ -1,8 +1,9 @@
+
 /* User profile form styles */
 
 
-.user-profile-form {
-  max-width: 600px;
+.immunization-profile-form {
+  width:60rem;
   margin: 0 auto;
   padding: 20px;
   background-color: #fff;
@@ -23,8 +24,16 @@
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+.immunization-form{
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 
-.user-profile-form button {
+}
+.user-profile60rem-form button {
   background-color: #007bff;
   color: #fff;
   padding: 10px 20px;

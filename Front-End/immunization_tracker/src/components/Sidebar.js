@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { GiHamburgerMenu, GiHomeGarage } from 'react-icons/gi';
-import { FaUser, FaRegCalendarAlt, FaSignOutAlt } from 'react-icons/fa';
+import { FaUser, FaRegCalendarAlt, FaSignOutAlt, FaSyringe } from 'react-icons/fa';
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -14,11 +14,6 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
-    // Clear user session here
-    // For example, if you're using localStorage to store the user session:
-    // localStorage.removeItem('user');
-
-    // Then navigate to the login page
     navigate('/login');
   };
 
@@ -29,6 +24,7 @@ const Sidebar = () => {
         <li><Link to='/home'><GiHomeGarage size={20} /> Home</Link></li>
         <li><Link to='/user-profile'><FaUser size={20} /> Profile</Link></li>
         <li><Link to='/planner'><FaRegCalendarAlt size={20} /> Planner</Link></li>
+        <li><Link to={'/immunizations'}><FaSyringe size={20}/>Vaccines</Link></li>
         <li><button onClick={handleLogout}><FaSignOutAlt size={20} /> Logout</button></li>
       </ul>
     </div>

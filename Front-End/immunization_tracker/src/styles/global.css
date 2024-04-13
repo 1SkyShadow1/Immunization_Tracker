@@ -87,3 +87,14 @@ a:hover {
 .visually-hidden {
   display: none;
 }
+.form-unit{
+    display: block;
+    width: fit-content;
+    border-radius: 6px;
+}
+.form-unit-2{
+    margin-top: 40px;
+    padding: 5px;
+    background-color:grey;
+    height: 6rem;
+}

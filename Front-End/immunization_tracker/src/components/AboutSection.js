@@ -2,8 +2,13 @@ import React from 'react';
 import "./AboutSection.css";
 
 const AboutSection = () => {
+  const secStyle = {
+    backgroundImage: `url(./vaccine-vial-and-syringe.jpg)`,
+    backgroundSize: 'cover', 
+    backgroundRepeat: 'no-repeat', 
+  }; 
   return (
-    <section className="about-section">
+    <section className="about-section" style={secStyle}>
       <div className="container">
         <div className="about-text">
           <h2 className="about-heading">About Immunization Tracker</h2>
