@@ -9,6 +9,7 @@ import Landing from "./components/Landing.js"
 import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";
 import Immunizations from "./components/Immunizations.js";
+import ImmunizationRecords from "./components/ImmunizationRecords.js";
 import { Routes, Route } from "react-router-dom";
 
 const Main = () => {
@@ -27,7 +28,7 @@ const Main = () => {
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/immunizations" element={<Immunizations  />} />
         <Route path="/planner" element={<Planner />} />
-        <Route path = "/immunizationsHistory" element = {"<ImmunizationHistoryTable"} />
+        <Route path = "/immunizationRecords" element = {<ImmunizationRecords />} />
       </Routes>
       <Footer />
     </>

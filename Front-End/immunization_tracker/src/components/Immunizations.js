@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import './UserProfile.css';
-import ImmunizationHistoryTable from './ImmunizationHistoryTable';
+
 
 const Immunizations = () => { 
   const [formData, setFormData] = useState({
     profile_id: '',
+    user_id: '',
     child_name: '',
     vaccine_name: '',
     date_administered: '',
@@ -16,11 +17,16 @@ const Immunizations = () => {
   const [message, setMessage] = useState(null);
   const [profileIds, setProfileIds] = useState([]);
   const [childNames, setChildNames] = useState([]);
-  const [immunizationRecords, setImmunizationRecords] = useState([]);
+  
 
   useEffect(() => {
     const user_id = window.sessionStorage.getItem('user_id'); 
     if (user_id) {
+        setFormData(prevData => ({
+          ...prevData,
+          user_id: parseInt(user_id, 10)
+        }));
+
         const fetchChildProfiles = async () => {
             try {
                 const response = await axios.get(`http://localhost:5000/childprofile/${user_id}`);
@@ -29,6 +35,8 @@ const Immunizations = () => {
                     const childNames = response.data.children.map(profile => profile.childName);
                     setProfileIds(profileIds);
                     setChildNames(childNames);
+
+
                 } else {
                     console.error('Unexpected response data structure: ' + JSON.stringify(response.data));
                 }
@@ -58,12 +66,27 @@ const Immunizations = () => {
     }
 
     try {
+      const response = await axios.get(`http://localhost:5000/childprofile/${formData.profile_id}`);
+      if (response.data.profile_id) {
+        setMessage('This profile ID is already registered for a child.');
+        return;
+      }
+    } catch (error) {
+      console.error('Error checking for existing profile ID:', error);
+      setMessage('An error occurred while checking for existing profile ID.');
+      return;
+    }
+  
+
+
+    try {
       const response = await axios.post('http://localhost:5000/immunizations', formData);
         console.log(response.data);
       if (response.data.id) {
         setMessage('Immunization data submitted successfully!');
         setFormData({
           profile_id: '',
+          user_id: '',
           child_name: '',
           vaccine_name: '',
           date_administered: '',
@@ -122,7 +145,7 @@ const Immunizations = () => {
         <button type="submit">Save</button>
       </form>
       {message && <p>{message}</p>}
-      <ImmunizationHistoryTable immunizationRecords={immunizationRecords} />
+      
     </div>
   );
 };

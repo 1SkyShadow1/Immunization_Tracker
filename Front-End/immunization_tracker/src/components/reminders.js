@@ -42,7 +42,16 @@ function Reminders({ onAdd }) {
       });
   }
 
-
+const deleteReminder = (id) => {
+  axios.delete(`http://localhost:5000/reminders/${id}`)
+    .then(response => {
+      console.log('Reminder deleted successfully: ', response.data);
+      onDelete(id);
+    })
+    .catch(error => {
+      console.error('Error deleting reminder: ', error);
+    });
+}
 
 
   return (

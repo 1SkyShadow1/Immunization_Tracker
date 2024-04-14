@@ -34,7 +34,7 @@ const handleSubmit = async (e) => {
 };
   return (
     <div className="login-container">
-      <h1>Login</h1>
+      <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">Username:</label>
         <input

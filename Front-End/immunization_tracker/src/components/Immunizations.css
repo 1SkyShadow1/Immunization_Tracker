@@ -1,99 +1,35 @@
-
-/* User profile form styles */
-
-
-.immunization-profile-form {
-  width:60rem;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.user-profile-form label {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.user-profile-form input,
-.user-profile-form select,
-.user-profile-form textarea {
+.immunization-records table {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border-collapse: collapse;
+  margin: 20px 0;
 }
-.immunization-form{
-  max-width: 60rem;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
 
+.immunization-records th,
+.immunization-records td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
 }
-.user-profile60rem-form button {
+
+.immunization-records th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}
+
+.immunization-records tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.immunization-records button {
   background-color: #007bff;
   color: #fff;
-  padding: 10px 20px;
+  padding: 5px 10px;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-right: 5px;
 }
 
-.user-profile-form button:hover {
+.immunization-records button:hover {
   background-color: #0056b3;
 }
-
-.user-profile-form .child-image-preview {
-  width: 100px;
-  height: 100px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  object-fit: cover;
-}
-
-
-
-.user-profile-form {
-  background-color: beige;
-  border: none;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-  h1 {
-    font-size: 3em;
-  }
-}
-
-.user-profile-form label {
-  color: #333;
-  font-size: 14px;
-}
-
-.user-profile-form input,
-.user-profile-form select,
-.user-profile-form textarea {
-  background-color: #fff;
-  border-color: #ccc;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-}
-
-.user-profile-form button {
-  background-color: #007bff;
-  border-color: #007bff;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-  margin-top: 30px;
-  margin-left: 100px;
-  width: 20rem;
-  
-}
-
-.user-profile-form button:hover {
-  background-color: orange;
-  border-color: #0056b3;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
-
-/* .user-profile-form .child-image-preview {
-  border-color: #ccc;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-} */

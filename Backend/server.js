@@ -144,7 +144,7 @@ app.post('/login', (req, res) => {
 
 
 
-        // userprofile
+        // Childprofile
 app.post('/child-profile', (req, res) => {
   
   const { user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone } = req.body;
@@ -165,6 +165,7 @@ app.post('/child-profile', (req, res) => {
     res.status(201).json({ success: true, user_id, childName, dateOfBirth, parentName, parentEmail, parentPhone});
   });
 });
+
 app.get('/childprofile/:user_id', (req, res) => {
   const { user_id } = req.params;
   connection.query('SELECT profile_id, childName FROM childprofile WHERE user_id = ?', [user_id], (error, results) => {
@@ -177,17 +178,55 @@ app.get('/childprofile/:user_id', (req, res) => {
   });
 });
 
+
+app.get('/childprofile/:id', async (req, res) => {
+    try {
+      const profileId = parseInt(req.params.id, 10); 
+      const profile = await ChildProfile.findOne({ profile_id: profileId });
+  
+      if (profile) {
+        res.json({ profile_id: profile.profile_id });
+      } else {
+        res.json({});
+      }
+    } catch (error) {
+      console.error('Error fetching child profile:', error);
+      res.status(500).json({ message: 'An error occurred while fetching the child profile.' });
+    }
+  });
+
+
+
+
+
+
+
 // Immunizations
 app.post('/immunizations', (req, res) => {
-  const { profile_id, child_name, vaccine_name, date_administered, next_due_date, notes, doctor_name } = req.body;
-  const query = 'INSERT INTO immunizations (profile_id, child_name, vaccine_name, date_administered, next_due_date, notes, doctor_name) VALUES (?, ?, ?, ?, ?, ?, ?)';
-  connection.query(query, [profile_id, child_name, vaccine_name, date_administered, next_due_date, notes, doctor_name], (error, results) => {
+  const { profile_id, user_id, child_name, vaccine_name, date_administered, next_due_date, notes, doctor_name } = req.body;
+  const query = 'INSERT INTO immunizations (profile_id, user_id, child_name, vaccine_name, date_administered, next_due_date, notes, doctor_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+  connection.query(query, [profile_id, user_id, child_name, vaccine_name, date_administered, next_due_date, notes, doctor_name], (error, results) => {
     if (error) {
       console.error('Error inserting immunization into the database: ' + error.stack);
       return res.status(500).send('Error inserting immunization into the database');
     }
     console.log('Immunization inserted into the database');
-    res.status(201).json({ id: results.insertId, profile_id, child_name, vaccine_name, date_administered, next_due_date, notes,doctor_name });
+    res.status(201).json({ id: results.insertId, profile_id, user_id, child_name, vaccine_name, date_administered, next_due_date, notes, doctor_name });
+  });
+});
+
+app.get('/immunizations/:user_id', (req, res) => {
+  const sql = 'SELECT * FROM Immunizations WHERE user_id = ?';
+  const userId = parseInt(req.params.user_id, 10);
+
+  connection.query(sql, [userId], (err, results) => {
+    if (err) {
+      console.error('Error fetching immunizations: ', err);
+      res.status(500).json({ message: 'Error fetching immunizations' });
+    } else {
+      console.log('Immunizations fetched successfully: ', results);
+      res.status(200).json(results);
+    }
   });
 });
 

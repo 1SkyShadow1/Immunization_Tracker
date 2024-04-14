@@ -5,11 +5,8 @@
   "main": "index.js",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
-=======
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
->>>>>>> c8f68f58c775841e456aa5cc4668573dd39956de
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@fullcalendar/daygrid": "^6.1.11",
     "@fullcalendar/interaction": "^6.1.11",

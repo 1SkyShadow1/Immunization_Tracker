@@ -31,16 +31,18 @@ const Calendar = () => {
     setEvents([...events, { title, date }]);
   };
 
+  const deleteEvent = (id) => {
+    setEvents(events.filter(event => event.id !== id));
+  };
+
   const handleEventClick = (clickInfo) => {
     if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
       const eventId = clickInfo.event.id;
       axios.delete(`http://localhost:5000/reminders/${eventId}`)
         .then(response => {
           console.log('Reminder deleted successfully: ', response.data);
-          // Remove the event from the calendar
           clickInfo.event.remove();
-          // Remove the event from the state
-          setEvents(events.filter(event => event.id !== eventId));
+          deleteEvent(eventId);
         })
         .catch(error => {
           console.error('Error deleting reminder: ', error);
@@ -58,7 +60,7 @@ const Calendar = () => {
         eventClick={handleEventClick}
         allDaySlot={false}
       />
-      <Reminder onAdd={addEvent} />
+      <Reminder onAdd={addEvent} onDelete={deleteEvent} />
     </div>
   );
 };

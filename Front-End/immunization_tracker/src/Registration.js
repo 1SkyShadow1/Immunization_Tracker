@@ -45,7 +45,7 @@ function Registration() {
 
   return (
     <div className="login-container">
-      <h1>Register</h1>
+      <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">Username:</label>
         <input
