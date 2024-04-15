@@ -1,11 +1,13 @@
 import React from 'react';
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import "./FeaturesSection.css";
 
 const FeaturesSection = () => {
   return (
     <section className="features-section">
       <div className="container">
-        <div className="features-list">
+        <Carousel showThumbs={false}>
           <div className="feature-item">
             <div className="feature-title">Track all of your child's immunizations in one place.</div>
             <div className="feature-description">
@@ -24,7 +26,7 @@ const FeaturesSection = () => {
               With Immunization Tracker, you can easily share your child's immunization records with your doctor or other caregivers. This makes it easy to keep everyone up-to-date on your child's immunization status.
             </div>
           </div>
-        </div>
+        </Carousel>
       </div>
     </section>
   );

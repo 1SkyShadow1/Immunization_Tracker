@@ -232,6 +232,7 @@ app.get('/immunizations/:user_id', (req, res) => {
 });
 
 app.put('/immunizations/:immunization_id', (req, res) => {
+  console.log('Immunization ID:', req.params.immunization_id);
     console.log('Request body:', req.body);
 
     let { child_name, vaccine_name, date_administered, doctor_name } = req.body;
@@ -258,6 +259,25 @@ app.put('/immunizations/:immunization_id', (req, res) => {
         res.status(500).json({ message: 'Unexpected error', error: error.message });
     }
 });
+
+app.delete('/immunizations/:immunization_id', (req, res) => {
+  console.log('Immunization ID:', req.params.immunization_id);
+  const immunization_id = parseInt(req.params.immunization_id, 10);
+
+  const sql = 'DELETE FROM Immunizations WHERE immunization_id = ?';
+  const params = [immunization_id];
+
+  connection.query(sql, params, (err, results) => {
+      if (err) {
+          console.error('Error deleting immunization record: ', err);
+          return res.status(500).json({ message: 'Error deleting immunization record', error: err.message });
+      }
+
+      console.log('Immunization record deleted successfully: ', results);
+      res.status(200).json(results);
+  });
+});
+
 // Start the server
 app.listen(5000, () => {
   console.log('Server is running on port 5000');

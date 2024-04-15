@@ -51,6 +51,7 @@ const deleteReminder = (id) => {
     .catch(error => {
       console.error('Error deleting reminder: ', error);
     });
+    
 }
 
 
