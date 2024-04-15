@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import './UserProfile.css';
-
+import { Link } from 'react-router-dom';
 
 const Immunizations = () => { 
   const [formData, setFormData] = useState({
@@ -145,7 +145,11 @@ const Immunizations = () => {
         <button type="submit">Save</button>
       </form>
       {message && <p>{message}</p>}
-      
+      { 
+    <Link to="/immunizationRecords">
+      <button className="immunization-button" type="button">View Immunization List</button>
+    </Link>
+      }
     </div>
   );
 };

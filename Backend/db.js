@@ -41,24 +41,24 @@ pool.query(`
 });
 
 // create the Immunizations table
-pool.query(
- ` CREATE TABLE IF NOT EXISTS Immunizations (immunization_id INT NOT NULL AUTO_INCREMENT
-  ,profile_id INT NOT NULL,
-  user_id INT NOT NULL,
-  child_name VARCHAR(255) NOT NULL,
-  vaccine_name VARCHAR(255) NOT NULL,
-  date_administered DATE NOT NULL,
-  next_due_date DATE NOT NULL,
-  doctor_name VARCHAR(255),
-  notes TEXT,
-  PRIMARY KEY (immunization_id),
-  FOREIGN KEY (profile_id) REFERENCES ChildProfile(profile_id),
-  FOREIGN KEY (user_id) REFERENCES Users(user_id)
-)
-  `
-) .then(()=>{
+pool.query(`
+  CREATE TABLE IF NOT EXISTS Immunizations (
+    immunization_id INT NOT NULL AUTO_INCREMENT,
+    profile_id INT NOT NULL,
+    user_id INT NOT NULL,
+    child_name VARCHAR(255) NOT NULL,
+    vaccine_name VARCHAR(255) NOT NULL,
+    date_administered DATE NOT NULL,
+    next_due_date DATE NOT NULL,
+    doctor_name VARCHAR(255),
+    notes TEXT,
+    PRIMARY KEY (immunization_id),
+    FOREIGN KEY (profile_id) REFERENCES ChildProfile(profile_id),
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+  )
+`).then(() => {
   console.log('Immunization table created successfully');
-})
+});
 
 // create the reminders table
 pool.query(

@@ -19,7 +19,12 @@
 .immunization-records tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-
+.immunization-button {
+  display: flex;
+  justify-content: flex-end;
+  margin: 50px 0;
+  
+}
 .immunization-records button {
   background-color: #007bff;
   color: #fff;

@@ -215,9 +215,10 @@ app.post('/immunizations', (req, res) => {
   });
 });
 
+
 app.get('/immunizations/:user_id', (req, res) => {
   const sql = 'SELECT * FROM Immunizations WHERE user_id = ?';
-  const userId = parseInt(req.params.user_id, 10);
+  const userId = parseInt(req.params.user_id,);
 
   connection.query(sql, [userId], (err, results) => {
     if (err) {
@@ -230,7 +231,33 @@ app.get('/immunizations/:user_id', (req, res) => {
   });
 });
 
+app.put('/immunizations/:immunization_id', (req, res) => {
+    console.log('Request body:', req.body);
 
+    let { child_name, vaccine_name, date_administered, doctor_name } = req.body;
+
+    if (!child_name || !vaccine_name || !date_administered || !doctor_name) {
+        return res.status(400).json({ message: 'Missing required fields in request body' });
+    }
+
+    try {
+        const sql = 'UPDATE Immunizations SET child_name = ?, vaccine_name = ?, date_administered = ?, doctor_name = ? WHERE immunization_id = ?';
+        const params = [child_name, vaccine_name, date_administered, doctor_name, parseInt(req.params.immunization_id, 10)];
+
+        connection.query(sql, params, (err, results) => {
+            if (err) {
+                console.error('Error updating immunization record: ', err);
+                return res.status(500).json({ message: 'Error updating immunization record', error: err.message });
+            }
+
+            console.log('Immunization record updated successfully: ', results);
+            res.status(200).json(results);
+        });
+    } catch (error) {
+        console.error('Unexpected error:', error);
+        res.status(500).json({ message: 'Unexpected error', error: error.message });
+    }
+});
 // Start the server
 app.listen(5000, () => {
   console.log('Server is running on port 5000');

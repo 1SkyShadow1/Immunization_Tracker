@@ -11,21 +11,21 @@ import Reminder from "./reminders.js";
 const Calendar = () => {
   const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    const user_id = window.sessionStorage.getItem('user_id');
-    if (!user_id) {
-      console.error('User ID not found in session storage');
-      return;
-    }
-    axios.get(`http://localhost:5000/reminders?user_id=${user_id}`)
-      .then(response => {
-        console.log('Reminders fetched successfully: ', response.data);
-        setEvents(response.data.map(reminder => ({ title: reminder.title, date: reminder.date })));
-      })
-      .catch(error => {
-        console.error('Error fetching reminders: ', error);
-      });
-  }, []);
+useEffect(() => {
+  const user_id = window.sessionStorage.getItem('user_id');
+  if (!user_id) {
+    console.error('User ID not found in session storage');
+    return;
+  }
+  axios.get(`http://localhost:5000/reminders?user_id=${user_id}`)
+    .then(response => {
+      console.log('Reminders fetched successfully: ', response.data);
+      setEvents(response.data.map(reminder => ({ id: reminder.reminder_id, title: reminder.title, date: reminder.date })));
+    })
+    .catch(error => {
+      console.error('Error fetching reminders: ', error);
+    });
+}, []);
 
   const addEvent = (title, date) => {
     setEvents([...events, { title, date }]);
