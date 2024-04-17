@@ -7,7 +7,7 @@ const FeaturesSection = () => {
   return (
     <section className="features-section">
       <div className="container">
-        <Carousel showThumbs={false}>
+        <Carousel showThumbs={false} autoPlay={true} infiniteLoop={true}>
           <div className="feature-item">
             <div className="feature-title">Track all of your child's immunizations in one place.</div>
             <div className="feature-description">
