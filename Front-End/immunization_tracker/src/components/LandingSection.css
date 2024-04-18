@@ -8,7 +8,7 @@
   }
   
   .landing-text {
-    color: black;
+    color: rgb(97, 16, 97);;
     text-align: center;
     padding-bottom: 20px;
     
@@ -16,6 +16,9 @@
   
   h1 {
     font-size: 3em;
+  }
+  h4 {
+    text-align: left;
   }
   
   p {
@@ -43,4 +46,68 @@
   
   .btn-primary:hover {
     background-color: #0069d9;
+  }
+
+  .features-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .feature {
+    width: 30%;
+    text-align: center;
+  }
+  
+  .feature img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .feature h2 {
+    font-size: 1.5em;
+    margin: 10px 0;
+  }
+  
+  .feature p {
+    font-size: 1.2em;
+  }
+
+  .about-section {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .about-section h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .about-section h3 {
+    font-size: 1.5em;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+  
+  .about-section p {
+    font-size: 1em;
+    line-height: 1.5;
+  }
+  
+  .about-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .about-section ul li {
+    margin-bottom: 10px;
+  }
+  
+  .about-section ul li a {
+    color: #337ab7;
+    text-decoration: none;
+  }
+  
+  .about-section ul li a:hover {
+    text-decoration: underline;
   }
